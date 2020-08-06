@@ -4,17 +4,17 @@ const state = {
     page: "landing",
     questions: [{
             title: "Who led the NBA in Rebounding during the 1995-1996 season?",
-            answers: ["answer 1, answer 2, answer 3, answer 4"],
+            answers: ["Dennis Rodman", "David Robinson", "Jason Caffey", "Scottie Pippen"],
             correct: 0
         },
         {
-            title: "Who led the NBA in Rebounding during the 1995-1996 season?",
-            answers: ["answer 1, answer 2, answer 3, answer 4"],
-            correct: 1
+            title: "Which team won the 2015-2016 season?",
+            answers: ["Cleveland Cavaliers", "Golden State Warriors", "LA Lakers", "Boston Celtics"],
+            correct: 0
         },
         {
-            title: "Who led the NBA in Rebounding during the 1995-1996 season?",
-            answers: ["answer 1, answer 2, answer 3, answer 4"],
+            title: "Who is the NBA All Time leading scorer",
+            answers: ["Karl Malone", "Michael Jordan", "Kareem Abdul-Jabbar", "Lebron James"],
             correct: 2
         }
     ]
@@ -40,7 +40,7 @@ $('body').on('submit', 'form', function(event) {
     } else {
         $('main').html(`<section id="answer">
         <h2>
-            Wrong! The answer was Dennis Rodman
+            Wrong! The answer was ${question.answers[question.correct]}
         </h2>
         <button id="nextQuestion">
             Next question
@@ -55,7 +55,7 @@ $('body').on('click', '#nextQuestion', function(event) {
         $('main').html(`
         <section id="score">
             <h2>
-                Your score is 1 out of 3
+                Your score is ${state.score} out of 3
             </h2>
             <button id = "nextQuestion">
             Play again
@@ -77,13 +77,13 @@ $('body').on('click', '#nextQuestion', function(event) {
                 <fieldset>
 
                     <input type="radio" value="0" name="answer">
-                    <label for="answer">Dennis Rodman</label>
-                    <input type="radio" value="0" name="answer">
-                    <label for="answer">David Robinson</label>
-                    <input type="radio" value="0" name="answer">
-                    <label for="answer">Jason Caffey</label>
-                    <input type="radio" value="0" name="answer">
-                    <label for="answer">Patrick Ewing</label>
+                    <label for="answer">${question.answers[0]}</label>
+                    <input type="radio" value="1" name="answer">
+                    <label for="answer">${question.answers[1]}</label>
+                    <input type="radio" value="2" name="answer">
+                    <label for="answer">${question.answers[2]}</label>
+                    <input type="radio" value="3" name="answer">
+                    <label for="answer">${question.answers[3]}</label>
                 </fieldset>
                 <button>
                 Submit answer
