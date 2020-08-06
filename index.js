@@ -33,18 +33,12 @@ $('body').on('submit', 'form', function(event) {
         <h2>
             Correct! Great job!
         </h2>
-        <h2>
-            Wrong! The answer was Dennis Rodman
-        </h2>
         <button id="nextQuestion">
             Next question
         </button>
     </section>`)
     } else {
         $('main').html(`<section id="answer">
-        <h2>
-            Correct! Great job!
-        </h2>
         <h2>
             Wrong! The answer was Dennis Rodman
         </h2>
@@ -61,7 +55,7 @@ $('body').on('click', '#nextQuestion', function(event) {
         $('main').html(`
         <section id="score">
             <h2>
-                Your score is 7 out of 10
+                Your score is 1 out of 3
             </h2>
             <button id = "nextQuestion">
             Play again
