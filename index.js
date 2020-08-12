@@ -24,29 +24,10 @@ const state = {
 $('body').on('submit', 'form', function(event) {
     event.preventDefault()
     const answer = event.target.answer.value
-    console.log(answer)
     const question = state.questions[state.currentQuestion]
-    console.log(question)
-    if (answer == question.correct) {
-        state.score++
-            $('main').html(`<section id="answer">
-        <h2>
-            Correct! Great job!
-        </h2>
-        <button id="nextQuestion">
-            Next question
-        </button>
-    </section>`)
-    } else {
-        $('main').html(`<section id="answer">
-        <h2>
-            Wrong! The answer was ${question.answers[question.correct]}
-        </h2>
-        <button id="nextQuestion">
-            Next question
-        </button>
-    </section>`)
-    }
+
+    renderFeedback(answer)
+
     state.currentQuestion++
 })
 
@@ -55,7 +36,7 @@ $('body').on('click', '#nextQuestion', function(event) {
         $('main').html(`
         <section id="score">
             <h2>
-                Your score is ${state.score} out of 3
+                Your score is ${state.score} out of ${state.questions.length}
             </h2>
             <button id = "nextQuestion">
             Play again
@@ -68,7 +49,8 @@ $('body').on('click', '#nextQuestion', function(event) {
     }
     const question = state.questions[state.currentQuestion]
     console.log('test')
-    $('main').html(` 
+    $('main').html(`
+    ${makeScore()} 
         <section id="question">
             <h2>
                 ${question.title}
@@ -76,13 +58,13 @@ $('body').on('click', '#nextQuestion', function(event) {
             <form>
                 <fieldset>
 
-                    <input type="radio" value="0" name="answer">
+                    <input type="radio" required value="0" name="answer">
                     <label for="answer">${question.answers[0]}</label>
-                    <input type="radio" value="1" name="answer">
+                    <input type="radio" required value="1" name="answer">
                     <label for="answer">${question.answers[1]}</label>
-                    <input type="radio" value="2" name="answer">
+                    <input type="radio" required value="2" name="answer">
                     <label for="answer">${question.answers[2]}</label>
-                    <input type="radio" value="3" name="answer">
+                    <input type="radio" required value="3" name="answer">
                     <label for="answer">${question.answers[3]}</label>
                 </fieldset>
                 <button>
@@ -92,6 +74,46 @@ $('body').on('click', '#nextQuestion', function(event) {
         </section>`)
 
 })
+
+function makeScore() {
+
+    return `
+    <h2> Your score ${state.score}
+    <br/>
+     Question ${state.currentQuestion+1} of ${state.questions.length} 
+    </h2>
+
+`
+
+}
+
+function renderFeedback(answer) {
+
+    if (answer == question.correct) {
+        state.score++
+            $('main').html(`<section id="answer">
+            ${makeScore()}
+        <h2>
+            Correct! Great job!
+        </h2>
+        <img src="madeshot.gif"/>
+        <button id="nextQuestion">
+            Next question
+        </button>
+    </section>`)
+    } else {
+        $('main').html(`<section id="answer">
+        ${makeScore()}
+        <h2>
+            Wrong! The answer was ${question.answers[question.correct]}
+        </h2>
+        <img src="fail.gif"/>
+        <button id="nextQuestion">
+            Next question
+        </button>
+    </section>`)
+    }
+}
 
 function start() {
     $('main').html(`

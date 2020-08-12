@@ -3,3 +3,48 @@ form {
 }
 
 #landing {}
+
+h2 {}
+
+header {
+    background-image: url(header.jpeg);
+    margin: 0;
+    height: 300px;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+h1 {
+    margin: 0;
+    text-align: center;
+    font-size: 50px;
+    padding-top: 100px;
+}
+
+main {
+    text-align: center;
+}
+
+img {
+    display: block;
+    margin: 20px auto;
+}
+
+fieldset {
+    margin: 0 auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    width: 200px;
+    margin: 20px auto;
+}
