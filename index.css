@@ -10,6 +10,7 @@ header {
     background-image: url(header.jpeg);
     margin: 0;
     height: 300px;
+    background-size: contain;
 }
 
 html,
