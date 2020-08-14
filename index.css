@@ -10,7 +10,8 @@ header {
     background-image: url(header.jpeg);
     margin: 0;
     height: 300px;
-    background-size: contain;
+    background-size: cover;
+    background-position: left center;
 }
 
 html,
