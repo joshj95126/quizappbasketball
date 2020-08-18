@@ -68,46 +68,14 @@ $('body').on('submit', 'form', function(event) {
 
 $('body').on('click', '#nextQuestion', function(event) {
     if (state.questions.length == state.currentQuestion) {
-        $('main').html(`
-        <section id="score">
-            <h2>
-                Your score is ${state.score} out of ${state.questions.length}
-            </h2>
-            <button id = "nextQuestion">
-            Play again
-        </button>
-        <img src="crossover.gif"/>
-        </section>
-        `)
+        renderScore()
         state.currentQuestion = 0
         state.score = 0
+
         return
     }
-    const question = state.questions[state.currentQuestion]
-    console.log('test')
-    $('main').html(`
-    ${makeScore()} 
-        <section id="question">
-            <h2>
-                ${question.title}
-            </h2>
-            <form>
-                <fieldset>
 
-                    <input type="radio" required value="0" name="answer">
-                    <label for="answer">${question.answers[0]}</label>
-                    <input type="radio" required value="1" name="answer">
-                    <label for="answer">${question.answers[1]}</label>
-                    <input type="radio" required value="2" name="answer">
-                    <label for="answer">${question.answers[2]}</label>
-                    <input type="radio" required value="3" name="answer">
-                    <label for="answer">${question.answers[3]}</label>
-                </fieldset>
-                <button>
-                Submit answer
-            </button>
-            </form>
-        </section>`)
+    renderQuestion()
 
 })
 
@@ -149,6 +117,51 @@ function renderFeedback(answer) {
         </button>
     </section>`)
     }
+}
+
+function renderQuestion() {
+    const question = state.questions[state.currentQuestion]
+    $('main').html(`
+    ${makeScore()} 
+        <section id="question">
+            <h2>
+                ${question.title}
+            </h2>
+            <form>
+                <fieldset>
+
+                    <input type="radio" id="answer1" required value="0" name="answer">
+                    <label for="answer1">${question.answers[0]}</label>
+                    <input type="radio" id="answer2" required value="1" name="answer">
+                    <label for="answer2">${question.answers[1]}</label>
+                    <input type="radio" id="answer3"required value="2" name="answer">
+                    <label for="answer3">${question.answers[2]}</label>
+                    <input type="radio" id="answer4"required value="3" name="answer">
+                    <label for="answer4">${question.answers[3]}</label>
+                </fieldset>
+                <button>
+                Submit answer
+            </button>
+            </form>
+        </section>`)
+
+
+}
+
+
+function renderScore() {
+    $('main').html(`
+    <section id="score">
+        <h2>
+            Your score is ${state.score} out of ${state.questions.length}
+        </h2>
+        <button id = "nextQuestion">
+        Play again
+    </button>
+    <img src="crossover.gif"/>
+    </section>
+    `)
+
 }
 
 function start() {
