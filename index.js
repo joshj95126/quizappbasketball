@@ -1,7 +1,7 @@
 const state = {
     currentQuestion: 0,
     score: 0,
-    page: "landing",
+    page: "start",
     questions: [{
             title: "Who led the NBA in Rebounding during the 1995-1996 season?",
             answers: ["Dennis Rodman", "David Robinson", "Jason Caffey", "Scottie Pippen"],
@@ -56,28 +56,22 @@ const state = {
 
 
 }
-$('body').on('submit', 'form', function(event) {
-    event.preventDefault()
-    const answer = event.target.answer.value
 
-
-    renderFeedback(answer)
-
-    state.currentQuestion++
-})
-
-$('body').on('click', '#nextQuestion', function(event) {
-    if (state.questions.length == state.currentQuestion) {
-        renderScore()
-        state.currentQuestion = 0
-        state.score = 0
-
-        return
+function render() {
+    let html
+    if (state.page == "start") {
+        html = renderStart()
+    } else if (state.page == "feedback") {
+        html = renderFeedback()
+    } else if (state.page == "question") {
+        html = renderQuestion()
+    } else if (state.page == "score") {
+        html = renderScore()
     }
+    $("main").html(html)
 
-    renderQuestion()
+}
 
-})
 
 function makeScore() {
 
@@ -91,11 +85,11 @@ function makeScore() {
 
 }
 
-function renderFeedback(answer) {
+function renderFeedback() {
     const question = state.questions[state.currentQuestion]
-    if (answer == question.correct) {
+    if (state.answer == question.correct) {
         state.score++
-            $('main').html(`<section id="answer">
+            return `<section id="answer">
             ${makeScore()}
         <h2>
             Correct! Great job!
@@ -104,9 +98,9 @@ function renderFeedback(answer) {
         <button id="nextQuestion">
             Next question
         </button>
-    </section>`)
+    </section>`
     } else {
-        $('main').html(`<section id="answer">
+        return `<section id="answer">
         ${makeScore()}
         <h2>
             Wrong! The answer was ${question.answers[question.correct]}
@@ -115,13 +109,13 @@ function renderFeedback(answer) {
         <button id="nextQuestion">
             Next question
         </button>
-    </section>`)
+    </section>`
     }
 }
 
 function renderQuestion() {
     const question = state.questions[state.currentQuestion]
-    $('main').html(`
+    return `
     ${makeScore()} 
         <section id="question">
             <h2>
@@ -143,14 +137,14 @@ function renderQuestion() {
                 Submit answer
             </button>
             </form>
-        </section>`)
+        </section>`
 
 
 }
 
 
 function renderScore() {
-    $('main').html(`
+    return `
     <section id="score">
         <h2>
             Your score is ${state.score} out of ${state.questions.length}
@@ -160,12 +154,12 @@ function renderScore() {
     </button>
     <img src="crossover.gif"/>
     </section>
-    `)
+    `
 
 }
 
-function start() {
-    $('main').html(`
+function renderStart() {
+    return `
     <section id="landing">
             <h2>
                 Test Your Knowledge
@@ -175,7 +169,38 @@ function start() {
         </button>
         <img src="curry.gif"/>
         </section>
-    `)
+    `
+}
+
+function eventListener() {
+    $('body').on('submit', 'form', function(event) {
+        event.preventDefault()
+        state.answer = event.target.answer.value
+        state.page = "feedback"
+        render()
+
+        state.currentQuestion++
+    })
+
+    $('body').on('click', '#nextQuestion', function(event) {
+        if (state.questions.length == state.currentQuestion) {
+            state.page = "score"
+            render()
+            state.currentQuestion = 0
+            state.score = 0
+
+            return
+        }
+        state.page = "question"
+        render()
+
+    })
+
+}
+
+function start() {
+    eventListener()
+    render()
 }
 
 $(start)
